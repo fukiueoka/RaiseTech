@@ -1,19 +1,19 @@
 # AWSコース第3回講義　課題  
-## ◆サンプルアプリケーションを起動，ブラウザにて接続を確認
+## ◇サンプルアプリケーションを起動，ブラウザにて接続を確認
 - サンプルアプリケーション接続確認画像
-![サンプルAP](/images/sampleAPconnection.png)
+![サンプルAP](/images/lecture.03/sampleAPconnection.png)
 
-## ◆APサーバーに関して
+## ◇APサーバーに関して
 - APサーバーの名前 :Puma, バージョン :6.4.2
-![APサーバー](/images/APserver.png)
+![APサーバー](/images/lecture.03/APserver.png)
 - APサーバーを終了させるとアクセスできなくなったが、再度APサーバーを起動するとアクセス可能となった。
-![APサーバー終了時](/images/APserverstop.png)
+![APサーバー終了時](/images/lecture.03/APserverstop.png)
 
-## ◆DBサーバーに関して
+## ◇DBサーバーに関して
 - DBサーバーの名前 :MySQL, バージョン :8.0.36
-![DBサーバー](/images/DBServer.png)
+![DBサーバー](/images/lecture.03/DBServer.png)
 - DBサーバーを終了させるとアクセスできなくなった。
-![DBサーバー終了時](/images/DBServerstop.png)
+![DBサーバー終了時](/images/lecture.03/DBServerstop.png)
 - Railsの構成管理ツールの名前 :Bundler
 
 ## ◆WEBアプリケーションについて（講義より学んだこと）
