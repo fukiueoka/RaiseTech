@@ -92,5 +92,5 @@ Outputs:
     Description: ALBSecurityGroup ID
     Value: !Ref TestALBSecurityGroup
     Export: 
-      Name: ALBSGID
+      Name: ALBSGID  
       
