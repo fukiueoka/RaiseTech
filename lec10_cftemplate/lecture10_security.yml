@@ -1,0 +1,95 @@
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Security Groups for lecture10
+
+Parameters:
+  ProjectName:
+    Type: String
+    Description: Project Name
+    Default: lecture10
+  
+  MyIpAddress:
+    Description: Ip address to allow SSH to EC2
+    Type: String
+
+Resources: 
+## EC2 SecurityGroup ##
+  TestEC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub ${ProjectName}-ec2-sg
+      GroupDescription:  Allow SSH and ALB connect
+      VpcId:  !ImportValue VPCID
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Fromport: 22
+          Toport: 22
+          CidrIp: !Ref MyIpAddress
+        - IpProtocol: tcp
+          Fromport: 80
+          Toport: 80
+          SourceSecurityGroupId: !Ref TestALBSecurityGroup
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0    
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-ec2-sg
+
+## RDS SecurityGroup ##
+  TestRDSSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub ${ProjectName}-rds-sg
+      GroupDescription: Allow connection from EC2
+      VpcId: !ImportValue VPCID
+      SecurityGroupIngress:
+        IpProtocol: tcp
+        Fromport: 3306
+        Toport: 3306
+        SourceSecurityGroupID: !Ref TestEC2SecurityGroup
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0  
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-rds-sg
+
+## ELB SecurityGroup ##
+  TestALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Sub ${ProjectName}-alb-sg
+      GroupDescription: allow 80 connect 
+      VpcId: !ImportValue VPCID
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          Fromport: 80
+          Toport: 80
+          CidrIp: !Ref MyIpAddress
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-alb-sg
+          
+## Outputs ##
+Outputs:
+  TestEC2SecurityGroupId:
+    Description: EC2SecurityGroup ID
+    Value: !Ref TestEC2SecurityGroup
+    Export: 
+      Name: EC2SGID
+  
+  TestRDSSecurityGroupId:
+    Description: RDSSecurityGroup ID
+    Value: !Ref TestRDSSecurityGroup
+    Export: 
+      Name: RDSSGID
+  
+  TestALBSecurityGroupId:
+    Description: ALBSecurityGroup ID
+    Value: !Ref TestALBSecurityGroup
+    Export: 
+      Name: ALBSGID  
