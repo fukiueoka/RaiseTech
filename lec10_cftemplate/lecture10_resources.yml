@@ -304,3 +304,4 @@ Outputs:
  RDSEndpoint:
     Description: Endpoint of RDSinstance
     Value:  !GetAtt TestDBEngine.Endpoint.Address
+    
